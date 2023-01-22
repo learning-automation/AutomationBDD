@@ -12,15 +12,17 @@ import utility.Browser;
 public class LoginSteps {
     LoginPage loginPage;
     WebDriver driver;
+    Browser browser;
 
     public LoginSteps(Browser browser){
         driver = browser.getDriver();
         loginPage = new LoginPage(driver);
+        this.browser = browser;
     }
 
     @Given("^user navigate to application$")
     public void navigateToApplication(){
-                System.out.println("running my test");
+        browser.navigateUrl("https://parabank.parasoft.com/parabank/about.htm");
     }
 
     @When("^user enter the username \"(.*)\"$")
@@ -38,7 +40,7 @@ public class LoginSteps {
           loginPage.clickLogIn();
     }
 
-    @Then("user should be able to see error message as \"(.*)\"")
+    @Then("^user should be able to see error message as \"(.*)\"$")
     public void validateHomeScreen(String text){
         Assert.assertEquals(loginPage.getErrorElement().getText(), text);
     }
