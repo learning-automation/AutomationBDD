@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import pageObjects.LoginPage;
 import utility.Browser;
+import utility.Constants;
 
 public class LoginSteps {
     LoginPage loginPage;
@@ -22,17 +23,17 @@ public class LoginSteps {
 
     @Given("^user navigate to application$")
     public void navigateToApplication(){
-        browser.navigateUrl("https://parabank.parasoft.com/parabank/about.htm");
+        browser.navigateUrl((String)Constants.propBrowser.get("url"));
     }
 
     @When("^user enter the username \"(.*)\"$")
     public void enterUserName(String username){
-        loginPage.enterUsername(username);
+        loginPage.enterUsername(Constants.currentTCData.getProperty(username));
     }
 
     @And("^user enter the password \"(.*)\"$")
     public void enterPassword(String password){
-           loginPage.enterPassword(password);
+           loginPage.enterPassword(Constants.currentTCData.getProperty(password));
     }
 
     @And("^user clicks on login button$")
@@ -42,6 +43,6 @@ public class LoginSteps {
 
     @Then("^user should be able to see error message as \"(.*)\"$")
     public void validateHomeScreen(String text){
-        Assert.assertEquals(loginPage.getErrorElement().getText(), text);
+        Assert.assertEquals(loginPage.getErrorElement().getText(), Constants.currentTCData.getProperty(text));
     }
 }
